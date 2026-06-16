@@ -1,0 +1,114 @@
+CREATE DATABASE blog_system;
+
+USE blog_system;
+
+CREATE TABLE posts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255),
+    slug VARCHAR(255) UNIQUE,
+    content TEXT,
+    image VARCHAR(255),
+    excerpt TEXT,
+    type ENUM('blog', 'project') DEFAULT 'blog',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE tags (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    slug VARCHAR(100) UNIQUE
+);
+
+CREATE TABLE post_tags (
+    post_id INT,
+    tag_id INT,
+
+    PRIMARY KEY (post_id, tag_id),
+
+    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
+    FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
+);
+
+CREATE TABLE subscribers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO tags (name, slug) VALUES
+('Design', 'design'),
+('Research', 'research'),
+('Presentation', 'presentation'),
+('Management', 'management'),
+('Framework', 'framework'),
+('Software Development', 'software-development'),
+('SaaS', 'saas'),
+('Tools', 'tools'),
+('Podcast', 'podcast'),
+('Leadership', 'leadership');
+
+INSERT INTO posts (title, slug, content, excerpt, image, type) VALUES
+('UX Design Basics', 'ux-design-basics', 'content', 'intro UX', '', 'blog'),
+('Design Thinking Process', 'design-thinking-process', 'content', 'design thinking', '', 'blog'),
+('User Research Guide', 'user-research-guide', 'content', 'research UX', '', 'blog'),
+('UI Patterns Overview', 'ui-patterns-overview', 'content', 'ui patterns', '', 'blog'),
+('Color Theory in Design', 'color-theory-design', 'content', 'colors', '', 'blog');
+
+INSERT INTO posts (title, slug, content, excerpt, image, type) VALUES
+('React Basics', 'react-basics', 'content', 'react intro', '', 'blog'),
+('NodeJS Fundamentals', 'nodejs-fundamentals', 'content', 'nodejs intro', '', 'blog'),
+('Express API Guide', 'express-api-guide', 'content', 'api building', '', 'project'),
+('Frontend Architecture', 'frontend-architecture', 'content', 'structure', '', 'blog'),
+('Backend Best Practices', 'backend-best-practices', 'content', 'backend tips', '', 'blog');
+
+INSERT INTO posts (title, slug, content, excerpt, image, type) VALUES
+('Building SaaS Product', 'building-saas-product', 'content', 'saas guide', '', 'project'),
+('Top Developer Tools', 'top-developer-tools', 'content', 'tools list', '', 'blog'),
+('Productivity Tools 2025', 'productivity-tools-2025', 'content', 'tools', '', 'blog'),
+('DevOps Tools Overview', 'devops-tools-overview', 'content', 'devops', '', 'blog'),
+('API Testing Tools', 'api-testing-tools', 'content', 'postman etc', '', 'blog');
+
+INSERT INTO posts (title, slug, content, excerpt, image, type) VALUES
+('Team Management Basics', 'team-management-basics', 'content', 'management', '', 'blog'),
+('Leadership Skills', 'leadership-skills', 'content', 'leadership', '', 'blog'),
+('Agile Project Management', 'agile-project-management', 'content', 'agile', '', 'blog'),
+('Startup Management Guide', 'startup-management-guide', 'content', 'startup', '', 'project'),
+('Communication in Teams', 'team-communication', 'content', 'communication', '', 'blog');
+
+INSERT INTO posts (title, slug, content, excerpt, image, type) VALUES
+('Tech Podcast Trends', 'tech-podcast-trends', 'content', 'podcast', '', 'blog'),
+('Developer Interviews Podcast', 'dev-interviews-podcast', 'content', 'interviews', '', 'blog'),
+('Future of Software Development', 'future-software-development', 'content', 'future', '', 'blog'),
+('AI in Product Design', 'ai-product-design', 'content', 'ai design', '', 'project'),
+('Remote Work Culture', 'remote-work-culture', 'content', 'remote', '', 'blog');
+
+INSERT INTO post_tags VALUES
+(1,1),(1,2),
+(2,1),
+(3,2),
+(4,1),
+(5,1),
+
+(6,5),
+(7,6),
+(8,6),(8,7),
+(9,6),
+(10,6),
+
+(11,7),
+(12,8),
+(13,8),
+(14,8),
+(15,8),
+
+(16,9),
+(17,10),
+(18,6),
+(19,5),
+(20,4);
+
+INSERT INTO subscribers (email) VALUES
+('test1@gmail.com'),
+('test2@gmail.com'),
+('dev@gmail.com'),
+('user@gmail.com');
